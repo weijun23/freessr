@@ -31,15 +31,15 @@ class Spider():
         selector = etree.HTML(self.html)        # 转换为lxml解析的对象
         titles = selector.xpath('//div[@id="tbss_wrapper"]//tr/td/text()')    # 这里返回的是一个列表
 
-        ss_result="MAX=3\n"
+        ss_result=""
         #ss://Method:Password@Address:Port
         for i in range(0, len(titles), 7):
-            ss_result=ss_result+"ss://"+titles[i+3]+":"+titles[i+4]+"@"+titles[i+1]+":"+titles[i+2]+"\n"
+            ss_result=ss_result+"ss://"+base64.b64encode(titles[i+3]+":"+titles[i+4]+"@"+titles[i+1]+":"+titles[i+2])+"\n"
         print ss_result
-        text=base64.b64encode(ss_result)
+        #text=base64.b64encode(ss_result)
         #print text
         file_obj = open("./ss", "w")
-        file_obj.write(text)
+        file_obj.write(ss_result)
 
     def BeautifulSoup_find(self):
         #用BeautifulSoup解析
